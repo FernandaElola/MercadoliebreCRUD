@@ -39,11 +39,11 @@ const controller = {
         let product = {
             id : products[products.length - 1].id + 1,
             name : name.trim(),
+            description : description.trim(),
             price : +price,
             discount : +discount,
-            category,
-            description : description.trim(),
-            image : req.file ? req.file.filename : 'default-image.png'            
+			image : req.file ? req.file.filename : 'default-image.png',
+            category                        
         }
         products.push(product);
 
