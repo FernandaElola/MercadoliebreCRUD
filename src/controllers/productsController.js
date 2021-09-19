@@ -82,7 +82,7 @@ const controller = {
 
         fs.writeFileSync(path.join(__dirname,'..','data','productsDataBase.json'),JSON.stringify(productsEdited,null,3),'utf-8');
 
-        return res.redirect('/products/')
+        return res.redirect('/products/' + req.params.id)
 	},
 
 	// Delete - Delete one product from DB
