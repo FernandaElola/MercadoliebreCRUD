@@ -43,7 +43,7 @@ const controller = {
             discount : +discount,
             category,
             description : description.trim(),
-            image : 'default-image.png'            
+            image : req.file ? req.file.filename : 'default-image.png'            
         }
         products.push(product);
 
