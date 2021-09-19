@@ -30,26 +30,26 @@ const controller = {
 
 	// Create - Form to create
 	create: (req, res) => {
-		return res.render('product-create-form')
+		return res.render('product-create-form')		
 	},
 	
 	// Create -  Method to store
 	store: (req, res) => {
-		// const {name,price,discount,category, description} = req.body;
-        // let product = {
-        //     id : products[products.length - 1].id + 1,
-        //     name : name.trim(),
-        //     price : +price,
-        //     discount : +discount,
-        //     category,
-        //     description : description.trim(),
-        //     image : 'default-image.png'            
-        // }
-        // products.push(product);
+		const {name,price,discount,category, description} = req.body;
+        let product = {
+            id : products[products.length - 1].id + 1,
+            name : name.trim(),
+            price : +price,
+            discount : +discount,
+            category,
+            description : description.trim(),
+            image : 'default-image.png'            
+        }
+        products.push(product);
 
-        // fs.writeFileSync(path.join(__dirname,'..','data','productsDataBase.json'),JSON.stringify(products,null,3),'utf-8');
+        fs.writeFileSync(path.join(__dirname,'..','data','productsDataBase.json'),JSON.stringify(products,null,3),'utf-8');
 
-        // res.redirect('/products')
+        res.redirect('/products/')
 	},
 
 	// Update - Form to edit
@@ -60,12 +60,35 @@ const controller = {
 	},
 	// Update - Method to update
 	update: (req, res) => {
-		res.send('Elemento editado'); 
+		const {name,price,discount,category, description} = req.body;
+
+        let product = products.find(product => product.id === +req.params.id);
+
+        let productEdited = {
+            id : +req.params.id,
+            name : name.trim(),
+            price : +price,
+            discount : +discount,
+            category,
+            description : description.trim(),
+            image : product.image         
+        }
+
+        let productsEdited = products.map(product => product.id === +req.params.id ? productEdited : product);
+
+        fs.writeFileSync(path.join(__dirname,'..','data','productsDataBase.json'),JSON.stringify(productsEdited,null,3),'utf-8');
+
+        return res.redirect('/products/')
 	},
 
 	// Delete - Delete one product from DB
 	destroy : (req, res) => {
-		res.send('Elemento borrado');   
+		
+		let productsEdited = products.filter(product => product.id !== +req.params.id);
+
+        fs.writeFileSync(path.join(__dirname,'..','data','productsDataBase.json'),JSON.stringify(productsEdited,null,3),'utf-8');
+
+        return res.redirect('/products')      
 	},
 	visited : (req, res) => {
 		let productsVisited = products.filter(product => product.category === 'visited');
